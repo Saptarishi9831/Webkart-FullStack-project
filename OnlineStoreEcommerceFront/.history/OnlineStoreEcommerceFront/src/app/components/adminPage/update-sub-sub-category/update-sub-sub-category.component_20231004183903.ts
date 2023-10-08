@@ -1,0 +1,97 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from 'src/app/class/category';
+import { Subcategory } from 'src/app/class/subcategory';
+import { Subsubcategory } from 'src/app/class/subsubcategory';
+import { CategoryService } from 'src/app/service/category.service';
+import { SubCategoryService } from 'src/app/service/sub-category.service';
+import { SubSubCatgeoryService } from 'src/app/service/sub-sub-catgeory.service';
+
+@Component({
+  selector: 'app-update-sub-sub-category',
+  templateUrl: './update-sub-sub-category.component.html',
+  styleUrls: ['./update-sub-sub-category.component.css']
+})
+export class UpdateSubSubCategoryComponent implements OnInit {
+
+  subSubCategoryId!: number;
+  subsubcategory: Subsubcategory = new Subsubcategory(0, '',0,0);
+  categoryid:number=0;
+  categories: Category[] = []; 
+  subCategoryId: number = 0;
+  subcategories: Subcategory[] = [];
+ 
+  constructor(private subSubCategoryService: SubSubCatgeoryService, private categoryService:CategoryService,
+    private subCategoryService:SubCategoryService,
+    private route: ActivatedRoute,
+    private router: Router) { }
+
+    ngOnInit(): void {
+      this.subSubCategoryId = this.route.snapshot.params['id'];
+      this.subSubCategoryService.getSubSubCategoryById(this.subSubCategoryId).subscribe(data => {
+        this.subsubcategory = data;
+        this.fetchCategories(); 
+        this.fetchSubCategories();
+      }, error => console.log(error));
+    }
+
+    fetchCategories() {
+      this.categoryService.getCategoryList().subscribe({
+        next: (data: Category[]) => {
+          this.categories = data;
+          console.log(this.categories);
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
+    }
+
+    fetchSubCategories()
+    {
+      this.subCategoryService.getSubCategoryList().subscribe({
+        next: (data: Subcategory[]) => {
+          this.subcategories = data;
+          console.log(this.categories);
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
+    }
+  
+    onSubmit(){
+      console.log('Submitting subsubcategory:', this.subsubcategory);
+      this.subSubCategoryService.updateSubSubCategory(this.subSubCategoryId, this.subsubcategory).subscribe(data => {
+        window.alert('SubSubCategory Updated Successfully!');
+        this.goToSubSubCategoryList();
+      }, error => console.error(error));
+    }
+    
+  
+    goToSubSubCategoryList(){
+      this.router.navigate(['/subsubcategory']);
+    }
+    updateCategoryIds(subSubCategoryId: number, subcategoryId: number, categoryId: number): void {
+      this.subSubCategoryService.setCategoryidToSubSubCategory(subSubCategoryId, categoryId)
+        .subscribe(
+          response => {
+            console.log('Category ID updated successfully:', response);
+          },
+          error => {
+            console.error('Error updating category ID:', error);
+          }
+        );
+    
+      this.subSubCategoryService.setsubcategoryidToSubSubCategory(subSubCategoryId, subcategoryId)
+        .subscribe(
+          response => {
+            console.log('Subcategory ID updated successfully:', response);
+          },
+          error => {
+            console.error('Error updating subcategory ID:', error);
+           
+          }
+        );
+    }
+  }    

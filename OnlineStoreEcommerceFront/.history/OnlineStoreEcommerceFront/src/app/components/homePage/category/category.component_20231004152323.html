@@ -1,0 +1,15 @@
+<style>
+    .category-link {
+  margin-right: 20px;
+  color: black;
+}
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <ul class="navbar-nav">
+        <li class="nav-item" *ngFor="let category of categories">
+          <a class="nav-link" [routerLink]="['/category', category.categoryid]">{{ category.categoryName }}</a>
+        </li>
+      </ul>
+    </div>
+  </nav>

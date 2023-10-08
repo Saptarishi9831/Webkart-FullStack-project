@@ -1,0 +1,47 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<!-- Include Bootstrap CSS (if not already included) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container">
+  <h2>Register</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>First Name:</label>
+      <input formControlName="firstname" class="form-control">
+      <div *ngIf="registerForm.get('firstname').errors?.minlength">First Name should be at least 3 characters.</div>
+      <div *ngIf="registerForm.get('firstname').errors?.maxlength">First Name should be less than 20 characters.</div>
+      <div *ngIf="registerForm.get('firstname').errors?.required">First Name is required.</div>
+    </div>
+    <div class="form-group">
+      <label>Last Name:</label>
+      <input formControlName="lastname" class="form-control">
+      <div *ngIf="registerForm.get('lastname').errors?.minlength">Last Name should be at least 3 characters.</div>
+      <div *ngIf="registerForm.get('lastname').errors?.maxlength">Last Name should be less than 20 characters.</div>
+      <div *ngIf="registerForm.get('lastname').errors?.required">Last Name is required.</div>
+    </div>
+    <div class="form-group">
+      <label>Email:</label>
+      <input formControlName="mailid" class="form-control">
+      <div *ngIf="registerForm.get('mailid').errors?.email">Enter a valid email address.</div>
+      <div *ngIf="registerForm.get('mailid').errors?.required">Email is required.</div>
+    </div>
+    <!-- ... (similar validation for password and mobilenumber fields) ... -->
+
+    <div class="form-group">
+      <label>Password:</label>
+      <input formControlName="password" type="password" class="form-control">
+      <div *ngIf="registerForm.get('password').errors?.pattern">Enter a valid password.</div>
+      <div *ngIf="registerForm.get('password').errors?.required">Password is required.</div>
+    </div>
+    <div class="form-group">
+      <label>Mobile Number:</label>
+      <input formControlName="mobilenumber" class="form-control">
+      <div *ngIf="registerForm.get('mobilenumber').errors?.pattern">Invalid mobile number format.</div>
+      <div *ngIf="registerForm.get('mobilenumber').errors?.required">Mobile Number is required.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>

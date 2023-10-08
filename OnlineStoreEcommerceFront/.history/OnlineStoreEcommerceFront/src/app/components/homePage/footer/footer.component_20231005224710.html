@@ -1,0 +1,43 @@
+<style>body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    flex-shrink: 0;
+}
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
+<footer class="bg-dark text-white">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Get to Know Us</h5>
+                <p>About Us</p>
+                <p>Our Story</p>
+                <p>Careers</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Connect with Us</h5>
+                <p>Follow Us on Social Media</p>
+                <p>Contact Us</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Let Us Help You</h5>
+                <p>Help & FAQs</p>
+                <p>Returns & Refunds</p>
+                <p>Customer Support</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
